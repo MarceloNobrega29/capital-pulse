@@ -31,6 +31,7 @@ public class User {
     private String password;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private Instant creationTimestamp;
 
     @UpdateTimestamp
