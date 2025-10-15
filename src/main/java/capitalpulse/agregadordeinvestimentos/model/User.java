@@ -21,13 +21,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID userId;
 
-    @Column(name = "username")
+    @Column(name = "username", length = 200)
     private String username;
 
-    @Column(name = "email")
+    @Column(name = "email", length = 200)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 64)
     private String password;
 
     @CreationTimestamp
