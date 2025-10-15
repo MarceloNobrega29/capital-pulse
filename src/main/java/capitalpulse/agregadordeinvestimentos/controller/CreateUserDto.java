@@ -1,5 +1,5 @@
 package capitalpulse.agregadordeinvestimentos.controller;
 
-public record CreateUserDto() {
+public record CreateUserDto(String username, String email, String password) {
     
 }
