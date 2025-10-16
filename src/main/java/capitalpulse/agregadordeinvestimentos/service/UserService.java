@@ -17,12 +17,12 @@ public class UserService {
     private UserRepository userRepository;
 
 
-    public void createUser(CreateUserDto createUserDto) {
+    public User createUser(CreateUserDto createUserDto) {
         User user = new User();
         user.setUsername(createUserDto.username());
         user.setEmail(createUserDto.email());
         user.setPassword(createUserDto.password());
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public Optional<User> getUserById(String userId) {

@@ -4,12 +4,13 @@ import capitalpulse.agregadordeinvestimentos.model.User;
 import capitalpulse.agregadordeinvestimentos.service.UserService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/v1/users")
@@ -19,8 +20,10 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public void createUser(@RequestBody CreateUserDto createUserDto) {
-        userService.createUser(createUserDto);
+    public ResponseEntity<User> createUser(@RequestBody CreateUserDto createUserDto) {
+        User novoUser = userService.createUser(createUserDto);
+        URI location = URI.create("/users/" + novoUser.getUserId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoUser);
     }
 
     @GetMapping("/{userId}")
