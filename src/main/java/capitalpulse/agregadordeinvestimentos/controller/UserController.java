@@ -2,6 +2,7 @@ package capitalpulse.agregadordeinvestimentos.controller;
 
 import capitalpulse.agregadordeinvestimentos.model.User;
 import capitalpulse.agregadordeinvestimentos.service.UserService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,8 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public Optional<User> getUserById(@PathVariable("userId") UUID uuid) {
-        return userService.getUserById(uuid);
+    public ResponseEntity<User> getUserById(@PathVariable ("userId") String userId) {
+        return userService.getUserById(userId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping()

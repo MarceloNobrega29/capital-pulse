@@ -25,12 +25,16 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Optional<User> getUserById(UUID uuid) {
-        return userRepository.findById(uuid);
+    public Optional<User> getUserById(String userId) {
+        return userRepository.findById(UUID.fromString(userId));
     }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public void deleteUserById(UUID userId) {
+        userRepository.deleteById(userId);
     }
 
 }
