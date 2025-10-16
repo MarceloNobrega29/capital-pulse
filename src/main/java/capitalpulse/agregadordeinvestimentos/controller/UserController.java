@@ -2,7 +2,6 @@ package capitalpulse.agregadordeinvestimentos.controller;
 
 import capitalpulse.agregadordeinvestimentos.model.User;
 import capitalpulse.agregadordeinvestimentos.service.UserService;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +36,10 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable ("userId") String userId) {
+        userService.deleteUserById(userId);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 
 }
