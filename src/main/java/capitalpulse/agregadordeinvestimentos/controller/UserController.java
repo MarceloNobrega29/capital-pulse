@@ -20,9 +20,9 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody CreateUserDto createUserDto) {
-        User novoUser = userService.createUser(createUserDto);
-        URI location = URI.create("/users/" + novoUser.getUserId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoUser);
+        User newUser = userService.createUser(createUserDto);
+        URI location = URI.create("/users/" + newUser.getUserId());
+        return ResponseEntity.created(location).body(newUser);
     }
 
     @GetMapping("/{userId}")
@@ -39,7 +39,13 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUserById(@PathVariable ("userId") String userId) {
         userService.deleteUserById(userId);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<Void> updateById(@PathVariable ("userId") String userId, @RequestBody UpdateUserDto updateUserDto) {
+        userService.updateById(userId, updateUserDto);
+        return ResponseEntity.noContent().build();
     }
 
 }

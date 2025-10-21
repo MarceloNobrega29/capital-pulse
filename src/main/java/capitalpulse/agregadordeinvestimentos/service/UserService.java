@@ -1,6 +1,7 @@
 package capitalpulse.agregadordeinvestimentos.service;
 
 import capitalpulse.agregadordeinvestimentos.controller.CreateUserDto;
+import capitalpulse.agregadordeinvestimentos.controller.UpdateUserDto;
 import capitalpulse.agregadordeinvestimentos.model.User;
 import capitalpulse.agregadordeinvestimentos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,19 @@ public class UserService {
 
     public void deleteUserById(String userId) {
         User user = userRepository.findById(UUID.fromString(userId))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         userRepository.delete(user);
     }
 
+    public void updateById(String userId, UpdateUserDto updateUserDto) {
+        var id = UUID.fromString(userId);
+        User user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        user.setUsername(updateUserDto.username());
+        user.setPassword(updateUserDto.password());
+
+        userRepository.save(user);
+    }
 
 }
