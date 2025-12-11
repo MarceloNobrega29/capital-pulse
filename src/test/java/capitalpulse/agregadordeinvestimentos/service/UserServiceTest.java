@@ -1,6 +1,7 @@
 package capitalpulse.agregadordeinvestimentos.service;
 
 import capitalpulse.agregadordeinvestimentos.controller.CreateUserDto;
+import capitalpulse.agregadordeinvestimentos.controller.UpdateUserDto;
 import capitalpulse.agregadordeinvestimentos.model.User;
 import capitalpulse.agregadordeinvestimentos.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -161,6 +162,46 @@ class UserServiceTest {
             assertEquals(userId, uuidArgumentCaptor.getValue());
 
             verify(userRepository).delete(user);
+        }
+    }
+
+    @Nested
+    class updateById {
+
+        @Test
+        @DisplayName("Should update user by id when user exists and username and password is filled")
+        void shouldUpdateUserByIdWhenUserExistsAndUsernameAndPasswordIsFilled() {
+
+            var updateUserDto = new UpdateUserDto(
+                    "newusername",
+                    "newpassword"
+            );
+
+            var user = new User(
+                    UUID.randomUUID(),
+                    "username",
+                    "email@email.com",
+                    "password",
+                    Instant.now(),
+                    null
+            );
+
+            when(userRepository.findById(any(UUID.class)))
+                    .thenReturn(Optional.of(user));
+
+            when(userRepository.save(any(User.class)))
+                    .thenReturn(user);
+
+            userService.updateById(user.getUserId().toString(), updateUserDto);
+
+            verify(userRepository).findById(uuidArgumentCaptor.capture());
+            assertEquals(user.getUserId(), uuidArgumentCaptor.getValue());
+
+            verify(userRepository).save(userArgumentCaptor.capture());
+
+            var userCaptured = userArgumentCaptor.getValue();
+            assertEquals(updateUserDto.username(), userCaptured.getUsername());
+            assertEquals(updateUserDto.password(), userCaptured.getPassword());
         }
     }
 }
