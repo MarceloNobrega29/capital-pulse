@@ -21,8 +21,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -135,6 +134,33 @@ class UserServiceTest {
             assertNotNull(output);
             assertEquals(userList.size(),output.size());
 
+        }
+    }
+
+    @Nested
+    class deleteUserById {
+
+        @Test
+        @DisplayName("Should delete user with success")
+        void shouldDeleteUserWithSuccess() {
+
+            var userId = UUID.randomUUID();
+            var user = new User();
+            user.setUserId(userId);
+
+            when(userRepository.findById(uuidArgumentCaptor.capture()))
+                    .thenReturn(Optional.of(user));
+
+
+            doNothing()
+                    .when(userRepository)
+                    .delete(any(User.class));
+
+            userService.deleteUserById(userId.toString());
+
+            assertEquals(userId, uuidArgumentCaptor.getValue());
+
+            verify(userRepository).delete(user);
         }
     }
 }
