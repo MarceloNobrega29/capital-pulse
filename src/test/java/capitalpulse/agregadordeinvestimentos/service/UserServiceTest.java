@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,6 +34,9 @@ class UserServiceTest {
 
     @Captor
     private ArgumentCaptor<User> userArgumentCaptor;
+
+    @Captor
+    private ArgumentCaptor<UUID> uuidArgumentCaptor;
 
     @Nested
     class createUser {
@@ -84,4 +88,24 @@ class UserServiceTest {
         }
     }
 
+    @Nested
+    class getUserById {
+
+        @Test
+        @DisplayName("Should get user by id with success when optional is empty")
+        void shouldGetUserByIdWithSuccessWhenOptionalIsEmpty() {
+
+            var userId = UUID.randomUUID();
+            doReturn(Optional.empty())
+                    .when(userRepository).
+                    findById(uuidArgumentCaptor.capture());
+
+            var output = userService.getUserById(userId.toString());
+
+            assertTrue(output.isEmpty());
+            assertEquals(userId, uuidArgumentCaptor.getValue());
+
+
+        }
+    }
 }
