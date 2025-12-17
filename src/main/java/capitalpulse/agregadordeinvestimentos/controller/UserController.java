@@ -1,6 +1,6 @@
 package capitalpulse.agregadordeinvestimentos.controller;
 
-import capitalpulse.agregadordeinvestimentos.model.User;
+import capitalpulse.agregadordeinvestimentos.entity.User;
 import capitalpulse.agregadordeinvestimentos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

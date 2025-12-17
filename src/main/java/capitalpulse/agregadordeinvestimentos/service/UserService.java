@@ -2,7 +2,7 @@ package capitalpulse.agregadordeinvestimentos.service;
 
 import capitalpulse.agregadordeinvestimentos.controller.CreateUserDto;
 import capitalpulse.agregadordeinvestimentos.controller.UpdateUserDto;
-import capitalpulse.agregadordeinvestimentos.model.User;
+import capitalpulse.agregadordeinvestimentos.entity.User;
 import capitalpulse.agregadordeinvestimentos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

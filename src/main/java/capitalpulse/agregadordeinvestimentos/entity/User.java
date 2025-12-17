@@ -1,4 +1,4 @@
-package capitalpulse.agregadordeinvestimentos.model;
+package capitalpulse.agregadordeinvestimentos.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
