@@ -38,6 +38,6 @@ public class User {
     @UpdateTimestamp
     private Instant updateTimestamp;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Account> accounts;
 }
