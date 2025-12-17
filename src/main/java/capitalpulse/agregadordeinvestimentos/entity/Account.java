@@ -1,0 +1,25 @@
+package capitalpulse.agregadordeinvestimentos.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.UUID;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Entity
+@Table(name = "tb_accounts")
+public class Account {
+
+    @Id
+    @Column(name = "account_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID accountId;
+
+    @Column(name = "description")
+    private String description;
+    
+}
