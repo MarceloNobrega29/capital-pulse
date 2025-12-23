@@ -15,7 +15,13 @@ import java.util.UUID;
 public class BillingAddress {
 
     @Id
+    @Column(name = "account_id")
     private UUID id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     @Column(name = "street")
     private String street;
