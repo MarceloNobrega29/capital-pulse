@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -30,4 +31,6 @@ public class Account {
     @PrimaryKeyJoinColumn
     private BillingAddress billingAddress;
 
+    @OneToMany(mappedBy = "account")
+    private List<AccountStock> accountStocks;
 }
