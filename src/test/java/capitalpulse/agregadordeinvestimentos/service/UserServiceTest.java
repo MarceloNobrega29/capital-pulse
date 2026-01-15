@@ -1,7 +1,7 @@
 package capitalpulse.agregadordeinvestimentos.service;
 
-import capitalpulse.agregadordeinvestimentos.controller.CreateUserDto;
-import capitalpulse.agregadordeinvestimentos.controller.UpdateUserDto;
+import capitalpulse.agregadordeinvestimentos.dto.CreateUserDto;
+import capitalpulse.agregadordeinvestimentos.dto.UpdateUserDto;
 import capitalpulse.agregadordeinvestimentos.entity.User;
 import capitalpulse.agregadordeinvestimentos.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;

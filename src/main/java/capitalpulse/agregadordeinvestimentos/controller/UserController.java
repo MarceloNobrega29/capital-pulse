@@ -1,5 +1,9 @@
 package capitalpulse.agregadordeinvestimentos.controller;
 
+import capitalpulse.agregadordeinvestimentos.dto.CreateAccountDto;
+import capitalpulse.agregadordeinvestimentos.dto.CreateUserDto;
+import capitalpulse.agregadordeinvestimentos.dto.UpdateUserDto;
+import capitalpulse.agregadordeinvestimentos.entity.Account;
 import capitalpulse.agregadordeinvestimentos.entity.User;
 import capitalpulse.agregadordeinvestimentos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +51,13 @@ public class UserController {
         userService.updateById(userId, updateUserDto);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{userId}/accounts")
+    public ResponseEntity<Account> createAccount(@PathVariable("userId") String userId, @RequestBody CreateAccountDto createAccountDto) {
+        Account newAccount = userService.createAccount(userId, createAccountDto);
+        URI location = URI.create("/users/" + userId + "/accounts/" + newAccount.getAccountId());
+        return ResponseEntity.created(location).body(newAccount);
+    }
+
 
 }
