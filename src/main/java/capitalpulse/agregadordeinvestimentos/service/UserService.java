@@ -1,5 +1,6 @@
 package capitalpulse.agregadordeinvestimentos.service;
 
+import capitalpulse.agregadordeinvestimentos.dto.AccountResponseDto;
 import capitalpulse.agregadordeinvestimentos.dto.CreateAccountDto;
 import capitalpulse.agregadordeinvestimentos.dto.CreateUserDto;
 import capitalpulse.agregadordeinvestimentos.dto.UpdateUserDto;
@@ -90,5 +91,17 @@ public class UserService {
         billingAddressRepository.save(address);
 
         return accountCreated;
+    }
+
+    public List<AccountResponseDto>  listAccounts(String userId) {
+
+        User user = userRepository.findById(UUID.fromString(userId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        return user.getAccounts()
+                .stream()
+                .map(ac -> new AccountResponseDto(ac.getAccountId().toString(), ac.getDescription()))
+                .toList();
+
     }
 }

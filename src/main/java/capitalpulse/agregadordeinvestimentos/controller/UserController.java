@@ -1,5 +1,6 @@
 package capitalpulse.agregadordeinvestimentos.controller;
 
+import capitalpulse.agregadordeinvestimentos.dto.AccountResponseDto;
 import capitalpulse.agregadordeinvestimentos.dto.CreateAccountDto;
 import capitalpulse.agregadordeinvestimentos.dto.CreateUserDto;
 import capitalpulse.agregadordeinvestimentos.dto.UpdateUserDto;
@@ -25,8 +26,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody CreateUserDto createUserDto) {
         User newUser = userService.createUser(createUserDto);
-        URI location = URI.create("/users/" + newUser.getUserId());
-        return ResponseEntity.created(location).body(newUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
     @GetMapping("/{userId}")
@@ -55,9 +55,13 @@ public class UserController {
     @PostMapping("/{userId}/accounts")
     public ResponseEntity<Account> createAccount(@PathVariable("userId") String userId, @RequestBody CreateAccountDto createAccountDto) {
         Account newAccount = userService.createAccount(userId, createAccountDto);
-        URI location = URI.create("/users/" + userId + "/accounts/" + newAccount.getAccountId());
-        return ResponseEntity.created(location).body(newAccount);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newAccount);
     }
 
+    @GetMapping("/{userId}/accounts")
+    public ResponseEntity<List<AccountResponseDto>> listAccounts(@PathVariable("userId") String userId) {
+        List<AccountResponseDto> accounts = userService.listAccounts(userId);
+        return ResponseEntity.ok(accounts);
+    }
 
 }
