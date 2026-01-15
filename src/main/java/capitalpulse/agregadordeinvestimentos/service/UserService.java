@@ -1,14 +1,22 @@
 package capitalpulse.agregadordeinvestimentos.service;
 
-import capitalpulse.agregadordeinvestimentos.controller.CreateUserDto;
-import capitalpulse.agregadordeinvestimentos.controller.UpdateUserDto;
-import capitalpulse.agregadordeinvestimentos.model.User;
+import capitalpulse.agregadordeinvestimentos.dto.AccountResponseDto;
+import capitalpulse.agregadordeinvestimentos.dto.CreateAccountDto;
+import capitalpulse.agregadordeinvestimentos.dto.CreateUserDto;
+import capitalpulse.agregadordeinvestimentos.dto.UpdateUserDto;
+import capitalpulse.agregadordeinvestimentos.entity.Account;
+import capitalpulse.agregadordeinvestimentos.entity.AccountStock;
+import capitalpulse.agregadordeinvestimentos.entity.BillingAddress;
+import capitalpulse.agregadordeinvestimentos.entity.User;
+import capitalpulse.agregadordeinvestimentos.repository.AccountRepository;
+import capitalpulse.agregadordeinvestimentos.repository.BillingAddressRepository;
 import capitalpulse.agregadordeinvestimentos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,6 +26,12 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private BillingAddressRepository billingAddressRepository;
 
 
     public User createUser(CreateUserDto createUserDto) {
@@ -53,4 +67,41 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public Account createAccount(String userId, CreateAccountDto createAccountDto) {
+
+        User user = userRepository.findById(UUID.fromString(userId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        if (user.getAccounts() == null) {
+            user.setAccounts(new ArrayList<>());
+        }
+
+        Account account = new Account();
+        account.setUser(user);
+        account.setDescription(createAccountDto.description());
+        account.setAccountStocks(new ArrayList<>());
+
+        Account accountCreated = accountRepository.save(account);
+
+        BillingAddress address = new BillingAddress();
+        address.setAccount(accountCreated);
+        address.setStreet(createAccountDto.street());
+        address.setNumber(createAccountDto.number());
+
+        billingAddressRepository.save(address);
+
+        return accountCreated;
+    }
+
+    public List<AccountResponseDto>  listAccounts(String userId) {
+
+        User user = userRepository.findById(UUID.fromString(userId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        return user.getAccounts()
+                .stream()
+                .map(ac -> new AccountResponseDto(ac.getAccountId().toString(), ac.getDescription()))
+                .toList();
+
+    }
 }

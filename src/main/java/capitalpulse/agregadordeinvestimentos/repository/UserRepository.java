@@ -1,6 +1,6 @@
 package capitalpulse.agregadordeinvestimentos.repository;
 
-import capitalpulse.agregadordeinvestimentos.model.User;
+import capitalpulse.agregadordeinvestimentos.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
