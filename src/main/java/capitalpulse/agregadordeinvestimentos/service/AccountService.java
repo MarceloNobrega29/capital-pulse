@@ -1,5 +1,6 @@
 package capitalpulse.agregadordeinvestimentos.service;
 
+import capitalpulse.agregadordeinvestimentos.dto.AccountStockResponseDto;
 import capitalpulse.agregadordeinvestimentos.dto.AssociateAccountStockDto;
 import capitalpulse.agregadordeinvestimentos.entity.Account;
 import capitalpulse.agregadordeinvestimentos.entity.AccountStock;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -46,5 +48,15 @@ public class AccountService {
         );
 
         accountStockRepository.save(entity);
+    }
+
+    public List<AccountStockResponseDto> listStock(String accountId) {
+
+        Account account = accountRepository.findById(UUID.fromString(accountId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
+
+        return account.getAccountStocks().stream().map(as ->
+                new AccountStockResponseDto(as.getStock().getStockId(), as.getQuantity(), 0.0)).toList();
+
     }
 }
