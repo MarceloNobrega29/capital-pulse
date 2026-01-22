@@ -5,7 +5,6 @@ import capitalpulse.agregadordeinvestimentos.dto.CreateAccountDto;
 import capitalpulse.agregadordeinvestimentos.dto.CreateUserDto;
 import capitalpulse.agregadordeinvestimentos.dto.UpdateUserDto;
 import capitalpulse.agregadordeinvestimentos.entity.Account;
-import capitalpulse.agregadordeinvestimentos.entity.AccountStock;
 import capitalpulse.agregadordeinvestimentos.entity.BillingAddress;
 import capitalpulse.agregadordeinvestimentos.entity.User;
 import capitalpulse.agregadordeinvestimentos.repository.AccountRepository;

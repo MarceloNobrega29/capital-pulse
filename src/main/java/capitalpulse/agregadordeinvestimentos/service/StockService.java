@@ -1,9 +1,7 @@
 package capitalpulse.agregadordeinvestimentos.service;
 
 import capitalpulse.agregadordeinvestimentos.dto.CreateStockDto;
-import capitalpulse.agregadordeinvestimentos.dto.CreateUserDto;
 import capitalpulse.agregadordeinvestimentos.entity.Stock;
-import capitalpulse.agregadordeinvestimentos.entity.User;
 import capitalpulse.agregadordeinvestimentos.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

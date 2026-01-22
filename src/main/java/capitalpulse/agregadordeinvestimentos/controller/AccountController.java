@@ -2,7 +2,6 @@ package capitalpulse.agregadordeinvestimentos.controller;
 
 import capitalpulse.agregadordeinvestimentos.dto.AccountStockResponseDto;
 import capitalpulse.agregadordeinvestimentos.dto.AssociateAccountStockDto;
-import capitalpulse.agregadordeinvestimentos.entity.Account;
 import capitalpulse.agregadordeinvestimentos.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
